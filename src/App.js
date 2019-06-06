@@ -1,26 +1,63 @@
 import React from 'react';
-import logo from './logo.svg';
+//import { Navigation } from './Navigation';
 import './App.css';
+import { ToDoList } from './ToDoList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props){
+    super(props);
+  
+    this.state = {
+      ToDoList : [],
+  }
+  
+  this.addItem = this.addItem.bind(this);
+  this.deleteItem = this.deleteItem.bind(this);
+}
+addItem(e){
+
+  if (this._inputElement.value!=""){
+    var newItem = {
+      key:Date.now(),
+      text : this._inputElement.value
+    }
+    this.setState((prevState) =>{
+      return{
+        ToDoList : prevState.ToDoList.concat(newItem)
+      }
+    });
+  }
+  this._inputElement.value ="";
+  e.preventDefault();
+//<Navigation clickHandler = { this.handleClick } />
+}
+deleteItem(key){
+  var filtered_items = this.state.ToDoList.filter(function (item){
+    return(item.key!==key)
+  })
+  this.setState({
+    ToDoList:filtered_items
+  })
+}
+  render(){
+    return (
+      <div>
+       
+      <div className="todoListMain">
+          <div className="header">
+          <form onSubmit={this.addItem}>
+            <input ref={(a)=>this._inputElement = a}
+             placeholder="enter text" />
+            <button type="submit" className="btn btn-success">Submit</button>
+          </form>
+          </div>
+          <ToDoList entries = {this.state.ToDoList}
+                    delete = {this.deleteItem}/>
+        </div>
+      </div>
+    );
+  }
+ 
 }
 
 export default App;
