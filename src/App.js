@@ -17,10 +17,14 @@ class App extends React.Component {
 addItem(e){
 
   if (this._inputElement.value!=""){
+    var priority = document.getElementById("priority");
+    var value = priority.options[priority.selectedIndex].value;
     var newItem = {
       key:Date.now(),
-      text : this._inputElement.value
+      text : this._inputElement.value,
+      color: value,
     }
+
     this.setState((prevState) =>{
       return{
         ToDoList : prevState.ToDoList.concat(newItem)
@@ -48,6 +52,11 @@ deleteItem(key){
           <form onSubmit={this.addItem}>
             <input ref={(a)=>this._inputElement = a}
              placeholder="enter text" />
+             <select id="priority">
+               <option value="red">High</option>
+               <option value="yellow">Medium</option>
+               <option value="green">Low</option>
+             </select>
             <button type="submit" className="btn btn-success">Submit</button>
           </form>
           </div>
