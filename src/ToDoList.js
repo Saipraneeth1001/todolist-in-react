@@ -8,7 +8,7 @@ export class ToDoList extends React.Component{
         this.createTasks = this.createTasks.bind(this);
     }
     createTasks(item)  {
-        return( <li onClick = {() => this.delete(item.key)}
+        return( <li style={{backgroundColor: item.color}} onClick = {() => this.delete(item.key)}
              key = {item.key}>{item.text}</li>)
     } 
     delete(key){
